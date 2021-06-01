@@ -2,6 +2,13 @@
 #add_vertex(v) adds new vertex v to the graph, and
 #add_edge(v1, v2, e) adds an edge with weight e between vertices v1 and v2.
 
+
+import networkx as nx
+import numpy as np
+import matplotlib as plot
+
+
+
 # Add a vertex to the set of vertices and the graph
 def add_vertex(v):
   global graph
@@ -69,4 +76,21 @@ add_edge(1, 0, 1)
 add_edge(2, 4, 3)
 add_edge(4, 2, 3)
 print_graph()
-print("Internal representation: ", graph)
+print("Adjacency Matrix A: ", graph)
+
+
+
+#generate a csv file
+np.savetxt("../graph1.csv", graph, delimiter = ",")
+
+
+G = nx.from_numpy_matrix(np.array(graph))
+pos=nx.spring_layout(G) # pos = nx.nx_agraph.graphviz_layout(G)
+labels = nx.get_edge_attributes(G,'weight')
+
+nx.draw_networkx(G,pos)
+nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
+plot.pyplot.show()
+
+
+
