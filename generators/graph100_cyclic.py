@@ -1,4 +1,4 @@
-#graph2.py
+#graph100_cyclic.py
 #implements a 100-node graph using an adjacency matrix: 
 #add_vertex(v) adds new vertex v to the graph, and
 #add_edge(v1, v2, e) adds an edge with weight e between vertices v1 and v2.
@@ -128,10 +128,10 @@ print("\n100x100 {0,1}-adjacency_matrix:\n", adjacency_matrix)
 
 
 #generate a {0,1}-adjacency matrix csv file 
-np.savetxt("../graph2.csv", adjacency_matrix, delimiter = ",", fmt='%d')
+np.savetxt("../graphcyclic.csv", adjacency_matrix, delimiter = ",", fmt='%d')
 
 #generate a float-weights adjacency matrix csv file
-np.savetxt("../graph2_fweights.csv", graph, delimiter = ",")
+np.savetxt("../graphcyclic_fweights.csv", graph, delimiter = ",")
 
 
 #display graph corresponding to graph1.weights.csv

@@ -1,5 +1,8 @@
-#The following code implements a graph using an adjacency matrix: 
-#add_vertex(v) adds new vertex v to the graph, and
+#create_graph_adjacency_matrix.py
+
+#creates a graph from methods 'add_vertex(i)' and 'add_edge(v1,v2,e)'
+#and then saves the graph as an adjacency matrix in a csv-file
+#add_vertex(i) adds new vertex i to the graph, and
 #add_edge(v1, v2, e) adds an edge with weight e between vertices v1 and v2.
 
 
