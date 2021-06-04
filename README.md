@@ -35,14 +35,20 @@
   ```>pip install -r requirements.txt```
 
 
-  
+
 * [5] '/graphN.csv' is a {0,1}-valued adjacency matrix for a randomly 
   generated 100-vertex undirected graph. 
   A weighted version is '/graphN_fweights.csv' 
 
+* NOTE: any weighted adjacency matrix can be converted to the needed binary
+  adjacency file by 'binary_adjacency.py' which writes to a default filename
+  'graph.csv'. 
 
+  Usage is:
 
-* NOTE: a random graph of any order can be generated (**although not 
+  ```>py binary_adjacency.py graphN_fweights.csv```    #-> graph.csv
+
+* NOTE: a random binary graph of any order can be generated (**although not 
   necessary**) to '/graphN.csv' and '/graphN_fweights.csv' by going to the 
   /generators directory and running one of 'generator_thin.py' 
   or 'generator_thick.py', where 'thin refers to a tendency to generate a 
@@ -55,7 +61,7 @@
    ```>py generator_thick.py 100```
 
 
-   
+
 * [6] run the blossom algorithm on any {0,1}-valued adjacency matrix represented
   as a csv-file of zeros and ones - for example 'graphN.csv'. A weighted
   adjacency matrix csv-file, if it exists in the same directory, will also
@@ -66,9 +72,9 @@
   present the module uses the {0,1}-valued adjacency matrix values as weights.
   
   The module also reports the number of vertex matches in a maximum matching 
-  (counting both vertices of match edges), and also generates a list of edges 
-  (both directions) for the maximum matching, corresponding to the given 
-  adjacency matrix - for example 'graphN.csv'.
+  (counting both vertices of match edges), and also generates an array of 
+  edge tuples (both directions) for the maximum matching, corresponding to the 
+  given adjacency matrix - for example 'graphN.csv'.
 
   Usage is:
   ```>py blossom.py  graphN.csv```

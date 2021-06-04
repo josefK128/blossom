@@ -1,6 +1,6 @@
 #weight.py 
 #sum weights of adjacency matrix lower triangle - don't count directed edges
-#default filename is 'graph0.csv'
+#default filename is 'graphN_fweights.csv'
 
 
 from numpy import genfromtxt
@@ -9,7 +9,7 @@ import sys
 
 
 
-fname = 'graph0.csv'
+fname = 'graphN_fweights.csv'
 if len(sys.argv) > 1:
     fname = sys.argv[1]
 
