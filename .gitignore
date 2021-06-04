@@ -6,19 +6,17 @@
 # Vim swp-files
 *.swp
 
-# dependencies
-/env/Lib
+# virtual env - to be set up AFTER clone
+/env
 
 # images, audio, video, models, etc
 /media
 
-# testing
+# testing other than /test
 /logs
 /expt
 /coverage
 
-# archive
-@archive
 
 # misc
 .DS_Store
