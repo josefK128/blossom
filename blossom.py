@@ -1,31 +1,61 @@
-#test.py 
-#test imports
+#blossom.py 
+#
+#  run the blossom algorithm on any {0,1}-valued adjacency matrix represented
+#  as a csv-file of zeros and ones - for example 'graphN.csv'. A weighted
+#  adjacency matrix csv-file, if it exists in the same directory, will also
+#  be read into blossom.py. If used it must follow the naming convention
+#  'graphN_fweights.csv' for the {0,1}-valued csv-file 'graphN.csv'.
+#  The module uses the weighted adjacency matrix to produce a weighted maximum
+#  match adjacency matrix 'graphN_max_fweights.csv'. If no weighted version is
+#  present the module uses the {0,1}-valued adjacency matrix values as weights.
+#  
+#  The module also reports the number of vertex matches in a maximum matching 
+#  (counting both vertices of match edges), and also generates an array of 
+#  edge tuples (both directions) for the maximum matching, corresponding to the 
+#  given adjacency matrix - for example 'graphN.csv'.
+#
+#  Usage is:
+#  ```>py blossom.py  graphN.csv```
+#
+#  The module creates two files:
+#  graphN_max_fweights.csv - the weighted adjacency matrix for the maximum match
+#  graphN_max_edges.txt - an array of tuples [(v1,v2),...] of the match edges
+#
+#
+#  program entry is at main() - line 427
+#  there are 3 central blocks in main:
+#
+#  @A - read or prepare a weights-matrix W for use in @C below
+#       read in weights file (exp graphN_fweights.csv) - store as matrix W
+#
+#  @B - find the maximum match graph - report number of nodes
+#
+#  @C - write match edges (list of list-pairs) and weighted adjacency matrix
+#       exp: graphN_max_edges.txt  and  graphN_max_fweights.csv
 
 
-#__main__.py
+
+
+
 from __future__ import print_function
 from __future__ import unicode_literals
-#blossalg.py
 from __future__ import division
 
-#__main__.py
 from builtins import range
 import re,sys,csv
+import os.path
 
-#blossalg.py
 import logging
 from past.utils import old_div
 from builtins import object
 
-#misc
+#key modules
 import numpy as np
 import networkx as nx
 import matplotlib as plot
-import os.path
 
 
 
-#blossalg
 # Logger setup - output errors only to blossom_errorfile
 logger = logging.getLogger(__name__)
 f_handler = logging.FileHandler("blossom_errorfile.log")
@@ -38,7 +68,6 @@ logger.addHandler(f_handler)
 
 
 
-#__main__
 USAGE = "Usage: {} 'infile.csv' ['outfile.txt']".format(sys.argv[0])
 
 args_pattern = re.compile(
@@ -414,8 +443,10 @@ def main():
         print(USAGE)
         return
 
-    print(f'args = {args}')
+    #print(f'args = {args}')
 
+
+    #@A - read or prepare a weights-matrix W for use in @C below
     #read in weights file (exp graphN_fweights.csv) - store as matrix W
     stem = sys.argv[1].split('.')
     #print(f'stem[0] = {stem[0]}')
@@ -426,27 +457,34 @@ def main():
     #otherwise use the {0,1}-weighted adjacency martrix
     if os.path.exists(wname) == False:
         wname = sys.argv[1]
+        print(f'weights-file does not exist so use {0,1}-weights in {wname}:')
+        wname = sys.argv[1]
+    else:
+        print(f'weights file exists with wname = {wname}:')
 
     #store the weights in a 2-dim array corresponding to the adjacency matrix
+    #W is type numpy.ndarray
     W = np.genfromtxt(wname, delimiter=',')
-    print(f'wname = {wname}:')
     print(W)
-    print(type(W))
+    #print(type(W))
 
 
+
+    #@B - find the maximum match graph - report number of nodes
+    #     node_array is a list of indices of edge-pairs occurring in each row.
+    #     For exp. [[9], [], [1,10],...] => edges at (0,9),(2,1),(2,10),etc...
+    #     matched_graph is an instance of class __main__.Graph (defined line309)
     node_array = read_infile(args["ARG1"])
     #print(f'node_array = {node_array}')
     #print(f'type(node_array) = {type(node_array)}')
 
-
     #find matching graph
     matched_graph = compute_max_matching(node_array)
-
-    
+    #print(f'type(matched_graph) = {type(matched_graph)}')
 
     # Multiple by two to convert number of matched pairs to matched nodes.
     outstring = (
-        """There are {} matched nodes in maximum matched graph.""".format(
+        """\nThere are {} matched nodes in maximum matched graph.""".format(
             int(2 * matched_graph.compute_size_matching())
         )
     )
@@ -454,9 +492,10 @@ def main():
 
 
 
-#    if args.get("ARG2"):
-#        matched_dict = matched_graph.create_matching_dict()
-#        save_matched_pairs(matched_dict, args["ARG2"])
+    #@C - write match edges (list of list-pairs) and weighted adjacency matrix
+    #     exp: graphN_max_edges.txt  and  graphN_max_fweights.csv
+    #     matched_dict is a Dict v1:v2 of edge vertex pairs
+    #     NOTE: v1:v2 in matched_dict => v2:v1 is also in matched_dict
     max_edges_fname = args.get("ARG2")
     #print(f'max_edges_fname = {max_edges_fname}')
     if max_edges_fname is None:
@@ -464,6 +503,8 @@ def main():
     #print(f'max_edges_fname = {max_edges_fname}')
 
     matched_dict = matched_graph.create_matching_dict()
+    print(f'matched edge vertex pairs are: {matched_dict}')
+    #print(f'type(matched_dict) = {type(matched_dict)}')
 
     #save match edges as pairs in max_edges_fname
     #save match weights as csv-file of weighted match adjacency matrix 
