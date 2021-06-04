@@ -1,24 +1,45 @@
 ### __blossom README__
 
 
+* [0] If not already installed, install Python >=3.8 (which should
+  include package/module management tool pip). If not, install pip also.
+  check install and path by the following:
+  ```>python --version```
+  ```>pip --version```
+  see ```https://www.python.org/downloads/``` 
+
+
+
 * [1] clone the repo https://github.com/josefK128/blossom.git   
   ```git clone https://github.com/josefK128/blossom.git``` - creates ./blossom
 
 
 
-* [2] cd to the root directory and activate the virtual environment - currently runs Python 3.9.1 
+* [2] cd to the root directory and create a virtual environment as follows:
+  Windows
+  ```>py -m venv env```
+  Linux and MacOS
+  ```>python3 -m venv env```
+
+  for more information on virtual environments and venv see:
+  ```https://docs.python.org/3/library/venv.html```
+
+
+
+* [3] activate the virtual environment
   ```>source env/Scripts/Activate```
 
 
 
-* [3] install external modules  
+* [4] install external modules (harmonious versions)
   ```>pip install -r requirements.txt```
 
 
   
-* [4] '/graphN.csv' is a {0,1}-valued adjacency matrix for a randomly 
+* [5] '/graphN.csv' is a {0,1}-valued adjacency matrix for a randomly 
   generated 100-vertex undirected graph. 
   A weighted version is '/graphN_fweights.csv' 
+
 
 
 * NOTE: a random graph of any order can be generated (**although not 
@@ -35,7 +56,7 @@
 
 
    
-* [5] run the blossom algorithm on any {0,1}-valued adjacency matrix represented
+* [6] run the blossom algorithm on any {0,1}-valued adjacency matrix represented
   as a csv-file of zeros and ones - for example 'graphN.csv'. A weighted
   adjacency matrix csv-file, if it exists in the same directory, will also
   be read into blossom.py. If used it must follow the naming convention
@@ -58,19 +79,19 @@
 
 
 
-* [6] calculate the total weight of the weighted adjacency matrix
+* [7] calculate the total weight of the weighted adjacency matrix
   ```>py weight.py  graphN_max_fweights.csv```
 
 
 
-* [7] display any graph corresponding to a csv-file of its adjacency matrix (or weighted adjacency matrix). For example:
+* [8] display any graph corresponding to a csv-file of its adjacency matrix (or weighted adjacency matrix). For example:
   ```>py display.py  graphN.csv```
   ```>py display.py  graphN_fweights.csv```
   ```>py display.py  graphN_max_fweights.csv```
 
 
 
-* [8] display the edges of the maximum match. For example:
+* [9] display the edges of the maximum match. For example:
   ```>py display_max_edges.py  graphN_max_edges.txt```
 
   
